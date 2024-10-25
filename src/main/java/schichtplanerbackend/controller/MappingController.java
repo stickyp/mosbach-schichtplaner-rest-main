@@ -8,6 +8,7 @@ import schichtplanerbackend.util.PasswordUtil;
 
 import java.sql.SQLException;
 
+
 @RestController
 @RequestMapping("/api/auth")
 public class MappingController {

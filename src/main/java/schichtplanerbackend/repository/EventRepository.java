@@ -1,7 +1,5 @@
 package schichtplanerbackend.repository;
 
-
-
 import schichtplanerbackend.entities.Event;
 import schichtplanerbackend.util.DatabaseConnection;
 
