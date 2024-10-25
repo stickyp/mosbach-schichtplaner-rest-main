@@ -1,7 +1,8 @@
 package schichtplanerbackend.repository;
 
-import com.yourapp.utils.DatabaseConnection;
+
 import schichtplanerbackend.entities.Absence;
+import schichtplanerbackend.util.DatabaseConnection;
 
 import java.sql.*;
 import java.time.LocalDateTime;

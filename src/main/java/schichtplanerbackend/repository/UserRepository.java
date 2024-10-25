@@ -1,8 +1,7 @@
 package schichtplanerbackend.repository;
 
-
-import com.yourapp.utils.DatabaseConnection;
 import schichtplanerbackend.entities.User;
+import schichtplanerbackend.util.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
