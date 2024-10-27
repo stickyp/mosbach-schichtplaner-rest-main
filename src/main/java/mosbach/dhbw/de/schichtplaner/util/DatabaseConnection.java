@@ -1,4 +1,4 @@
-package mosbach.dhbw.de.schichtplaner.config;
+package mosbach.dhbw.de.schichtplaner.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

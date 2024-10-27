@@ -1,7 +1,5 @@
 package mosbach.dhbw.de.schichtplaner.util;
 
-import mosbach.dhbw.de.schichtplaner.config.DatabaseConnection;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

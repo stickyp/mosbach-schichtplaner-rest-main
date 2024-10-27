@@ -1,8 +1,6 @@
 package mosbach.dhbw.de.schichtplaner.model;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -18,10 +16,9 @@ import jakarta.validation.constraints.NotNull;
 @JsonPropertyOrder({
         "id",
         "name",
-        "lastLogin",
-        "absence"
+        "role"
 })
-public class GetAllUserResponse {
+public class User {
 
     @JsonProperty("id")
     @JsonPropertyDescription("The unique ID of the user")
@@ -33,27 +30,22 @@ public class GetAllUserResponse {
     @NotNull
     private String name;
 
-    @JsonProperty("lastLogin")
-    @JsonPropertyDescription("The last login time of the user")
-    private Date lastLogin;
-
-    @JsonProperty("absence")
-    @Valid
-    private List<Absence> absence;
+    @JsonProperty("role")
+    @JsonPropertyDescription("The role of the user")
+    @NotNull
+    private String role;
 
     @JsonIgnore
     @Valid
     private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
-    public GetAllUserResponse() {
+    public User() {
     }
 
-    public GetAllUserResponse(Integer id, String name, Date lastLogin, List<Absence> absence) {
-        super();
+    public User(Integer id, String name, String role) {
         this.id = id;
         this.name = name;
-        this.lastLogin = lastLogin;
-        this.absence = absence;
+        this.role = role;
     }
 
     @JsonProperty("id")
@@ -76,29 +68,19 @@ public class GetAllUserResponse {
         this.name = name;
     }
 
-    @JsonProperty("lastLogin")
-    public Date getLastLogin() {
-        return lastLogin;
+    @JsonProperty("role")
+    public String getRole() {
+        return role;
     }
 
-    @JsonProperty("lastLogin")
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
-    @JsonProperty("absence")
-    public List<Absence> getAbsence() {
-        return absence;
-    }
-
-    @JsonProperty("absence")
-    public void setAbsence(List<Absence> absence) {
-        this.absence = absence;
+    @JsonProperty("role")
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
     @JsonAnySetter

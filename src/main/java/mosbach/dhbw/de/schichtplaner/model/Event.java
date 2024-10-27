@@ -23,7 +23,7 @@ import jakarta.validation.constraints.NotNull;
         "location",
         "description"
 })
-public class GetAllEventResponse {
+public class Event {
 
     @JsonProperty("id")
     @JsonPropertyDescription("The unique identifier of the event")
@@ -57,18 +57,16 @@ public class GetAllEventResponse {
 
     @JsonProperty("description")
     @JsonPropertyDescription("The description of the event")
-    @NotNull
     private String description;
 
     @JsonIgnore
     @Valid
     private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
-    public GetAllEventResponse() {
+    public Event() {
     }
 
-    public GetAllEventResponse(Integer id, String title, Date startDateTime, Date endDateTime, User user, Location location, String description) {
-        super();
+    public Event(Integer id, String title, Date startDateTime, Date endDateTime, User user, Location location, String description) {
         this.id = id;
         this.title = title;
         this.startDateTime = startDateTime;
@@ -150,7 +148,7 @@ public class GetAllEventResponse {
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
     @JsonAnySetter
