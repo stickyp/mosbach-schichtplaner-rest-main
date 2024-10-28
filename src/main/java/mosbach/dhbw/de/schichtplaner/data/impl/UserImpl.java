@@ -10,8 +10,17 @@ public class UserImpl implements User {
     private String role;
     private String jwtToken;
 
+    // Constructor for creating a user with all properties
     public UserImpl(int id, String name, String passwordHash, String role, String jwtToken) {
         this.id = id;
+        this.name = name;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.jwtToken = jwtToken;
+    }
+
+    // Constructor for creating a user without ID, useful for requests
+    public UserImpl(String name, String passwordHash, String role, String jwtToken) {
         this.name = name;
         this.passwordHash = passwordHash;
         this.role = role;
@@ -21,6 +30,11 @@ public class UserImpl implements User {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

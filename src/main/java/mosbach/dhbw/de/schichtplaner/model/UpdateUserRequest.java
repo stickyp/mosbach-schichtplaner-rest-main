@@ -22,7 +22,8 @@ import jakarta.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "name",
-        "password"
+        "password",
+        "role"
 })
 public class UpdateUserRequest {
 
@@ -35,6 +36,7 @@ public class UpdateUserRequest {
     @JsonPropertyDescription("The updated name of the user")
     @NotNull
     private String name;
+
     /**
      * The updated password of the user
      * (Required)
@@ -44,6 +46,17 @@ public class UpdateUserRequest {
     @JsonPropertyDescription("The updated password of the user")
     @NotNull
     private String password;
+
+    /**
+     * The updated role of the user
+     * (Required)
+     *
+     */
+    @JsonProperty("role")
+    @JsonPropertyDescription("The updated role of the user")
+    @NotNull
+    private String role;
+
     @JsonIgnore
     @Valid
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
@@ -57,15 +70,15 @@ public class UpdateUserRequest {
 
     /**
      *
-     * @param password
-     * The updated password of the user.
-     * @param name
-     * The updated name of the user.
+     * @param password The updated password of the user.
+     * @param name     The updated name of the user.
+     * @param role     The updated role of the user.
      */
-    public UpdateUserRequest(String name, String password) {
+    public UpdateUserRequest(String name, String password, String role) {
         super();
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
     /**
@@ -106,6 +119,26 @@ public class UpdateUserRequest {
     @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * The updated role of the user
+     * (Required)
+     *
+     */
+    @JsonProperty("role")
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * The updated role of the user
+     * (Required)
+     *
+     */
+    @JsonProperty("role")
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @JsonAnyGetter

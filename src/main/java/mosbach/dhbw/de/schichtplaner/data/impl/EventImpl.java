@@ -1,32 +1,26 @@
 package mosbach.dhbw.de.schichtplaner.data.impl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import mosbach.dhbw.de.schichtplaner.data.api.Event;
 
 import java.util.Date;
 
 public class EventImpl implements Event {
 
-    private Integer id;
+    private int id;
     private String title;
-    private Date startTime;
-    private Date endTime;
+    private Date startDateTime;
+    private Date endDateTime;
     private String location;
     private String description;
-    private Integer assignedUserId;
+    private int assignedUserId;
 
-    public EventImpl(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("title") String title,
-            @JsonProperty("startTime") Date startTime,
-            @JsonProperty("endTime") Date endTime,
-            @JsonProperty("location") String location,
-            @JsonProperty("description") String description,
-            @JsonProperty("assignedUserId") Integer assignedUserId) {
+    // Constructor
+    public EventImpl(int id, String title, Date startDateTime, Date endDateTime, String location, String description, int assignedUserId) {
         this.id = id;
         this.title = title;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.location = location;
         this.description = description;
         this.assignedUserId = assignedUserId;
@@ -54,22 +48,22 @@ public class EventImpl implements Event {
 
     @Override
     public Date getStartTime() {
-        return startTime;
+        return startDateTime;
     }
 
     @Override
     public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+        this.startDateTime = startTime;
     }
 
     @Override
     public Date getEndTime() {
-        return endTime;
+        return endDateTime;
     }
 
     @Override
     public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+        this.endDateTime = endTime;
     }
 
     @Override

@@ -1,9 +1,9 @@
-package mosbach.dhbw.de.schichtplaner.manager;
+package mosbach.dhbw.de.schichtplaner.data.api;
 
-import mosbach.dhbw.de.schichtplaner.data.api.User;
 import java.util.List;
 
 public interface UserManager {
+    int createID();
 
     void createUser(User user);
 

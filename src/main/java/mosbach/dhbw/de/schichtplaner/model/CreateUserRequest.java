@@ -13,112 +13,78 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
 /**
  * CreateUserRequest
- * <p>
- *
- *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "name",
-        "password"
+        "password",
+        "role"
 })
 public class CreateUserRequest {
 
-    /**
-     * The name of the user
-     * (Required)
-     *
-     */
     @JsonProperty("name")
     @JsonPropertyDescription("The name of the user")
     @Size(min = 1, max = 100)
     @NotNull
     private String name;
-    /**
-     * The password for the user
-     * (Required)
-     *
-     */
+
     @JsonProperty("password")
     @JsonPropertyDescription("The password for the user")
     @Size(min = 8)
     @NotNull
     private String password;
+
+    @JsonProperty("role")
+    @JsonPropertyDescription("The role of the user")
+    @NotNull
+    private String role;
+
     @JsonIgnore
     @Valid
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
     public CreateUserRequest() {
     }
 
-    /**
-     *
-     * @param password
-     * The password for the user.
-     * @param name
-     * The name of the user.
-     */
-    public CreateUserRequest(String name, String password) {
-        super();
+    public CreateUserRequest(String name, String password, String role) {
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
-    /**
-     * The name of the user
-     * (Required)
-     *
-     */
-    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
-    /**
-     * The name of the user
-     * (Required)
-     *
-     */
-    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * The password for the user
-     * (Required)
-     *
-     */
-    @JsonProperty("password")
     public String getPassword() {
         return password;
     }
 
-    /**
-     * The password for the user
-     * (Required)
-     *
-     */
-    @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

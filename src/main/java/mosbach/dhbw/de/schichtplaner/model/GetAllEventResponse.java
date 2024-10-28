@@ -157,4 +157,99 @@ public class GetAllEventResponse {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+
+    // Inner class for AssignedUser
+    public static class AssignedUser extends User {
+
+        @JsonProperty("id")
+        @JsonPropertyDescription("The unique identifier of the assigned user")
+        private Integer id;
+
+        @JsonProperty("name")
+        @JsonPropertyDescription("The name of the assigned user")
+        private String name;
+
+        public AssignedUser() {
+        }
+
+        public AssignedUser(Integer id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @JsonProperty("id")
+        public Integer getId() {
+            return id;
+        }
+
+        @JsonProperty("id")
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        @JsonProperty("name")
+        public String getName() {
+            return name;
+        }
+
+        @JsonProperty("name")
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    // Inner class for Location
+    public static class Location {
+
+        @JsonProperty("address")
+        @JsonPropertyDescription("The address of the event location")
+        private String address;
+
+        @JsonProperty("latitude")
+        @JsonPropertyDescription("The latitude of the event location")
+        private Double latitude;
+
+        @JsonProperty("longitude")
+        @JsonPropertyDescription("The longitude of the event location")
+        private Double longitude;
+
+        public Location() {
+        }
+
+        public Location(String address, Double latitude, Double longitude) {
+            this.address = address;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @JsonProperty("address")
+        public String getAddress() {
+            return address;
+        }
+
+        @JsonProperty("address")
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        @JsonProperty("latitude")
+        public Double getLatitude() {
+            return latitude;
+        }
+
+        @JsonProperty("latitude")
+        public void setLatitude(Double latitude) {
+            this.latitude = latitude;
+        }
+
+        @JsonProperty("longitude")
+        public Double getLongitude() {
+            return longitude;
+        }
+
+        @JsonProperty("longitude")
+        public void setLongitude(Double longitude) {
+            this.longitude = longitude;
+        }
+    }
 }

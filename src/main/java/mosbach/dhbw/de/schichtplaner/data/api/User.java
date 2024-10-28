@@ -1,6 +1,7 @@
 package mosbach.dhbw.de.schichtplaner.data.api;
 
 public interface User {
+    void setId(int id);
     int getId();
     String getName();
     void setName(String name);

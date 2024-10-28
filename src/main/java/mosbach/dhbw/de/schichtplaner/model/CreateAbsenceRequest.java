@@ -22,121 +22,82 @@ import jakarta.validation.constraints.NotNull;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+        "userId",
         "startDateTime",
         "endDateTime",
         "reason"
 })
 public class CreateAbsenceRequest {
 
-    /**
-     * The start date and time of the user's absence
-     * (Required)
-     *
-     */
+    @JsonProperty("userId")
+    @NotNull
+    private Integer userId;
+
     @JsonProperty("startDateTime")
     @JsonPropertyDescription("The start date and time of the user's absence")
     @NotNull
     private Date startDateTime;
-    /**
-     * The end date and time of the user's absence
-     * (Required)
-     *
-     */
+
     @JsonProperty("endDateTime")
     @JsonPropertyDescription("The end date and time of the user's absence")
     @NotNull
     private Date endDateTime;
-    /**
-     * The reason for the user's absence
-     * (Required)
-     *
-     */
+
     @JsonProperty("reason")
     @JsonPropertyDescription("The reason for the user's absence")
     @NotNull
     private String reason;
+
     @JsonIgnore
     @Valid
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
     public CreateAbsenceRequest() {
     }
 
-    /**
-     *
-     * @param reason
-     * The reason for the user's absence.
-     * @param startDateTime
-     * The start date and time of the user's absence.
-     * @param endDateTime
-     * The end date and time of the user's absence.
-     */
-    public CreateAbsenceRequest(Date startDateTime, Date endDateTime, String reason) {
+    public CreateAbsenceRequest(Integer userId, Date startDateTime, Date endDateTime, String reason) {
         super();
+        this.userId = userId;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.reason = reason;
     }
 
-    /**
-     * The start date and time of the user's absence
-     * (Required)
-     *
-     */
+    @JsonProperty("userId")
+    public Integer getUserId() {
+        return userId;
+    }
+
+    @JsonProperty("userId")
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @JsonProperty("startDateTime")
     public Date getStartDateTime() {
         return startDateTime;
     }
 
-    /**
-     * The start date and time of the user's absence
-     * (Required)
-     *
-     */
     @JsonProperty("startDateTime")
     public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    /**
-     * The end date and time of the user's absence
-     * (Required)
-     *
-     */
     @JsonProperty("endDateTime")
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    /**
-     * The end date and time of the user's absence
-     * (Required)
-     *
-     */
     @JsonProperty("endDateTime")
     public void setEndDateTime(Date endDateTime) {
         this.endDateTime = endDateTime;
     }
 
-    /**
-     * The reason for the user's absence
-     * (Required)
-     *
-     */
     @JsonProperty("reason")
     public String getReason() {
         return reason;
     }
 
-    /**
-     * The reason for the user's absence
-     * (Required)
-     *
-     */
     @JsonProperty("reason")
     public void setReason(String reason) {
         this.reason = reason;

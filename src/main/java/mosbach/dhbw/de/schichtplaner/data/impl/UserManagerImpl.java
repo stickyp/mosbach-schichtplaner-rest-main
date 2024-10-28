@@ -1,8 +1,7 @@
-package mosbach.dhbw.de.schichtplaner.manager.impl;
+package mosbach.dhbw.de.schichtplaner.data.impl;
 
 import mosbach.dhbw.de.schichtplaner.data.api.User;
-import mosbach.dhbw.de.schichtplaner.data.impl.UserImpl;
-import mosbach.dhbw.de.schichtplaner.manager.UserManager;
+import mosbach.dhbw.de.schichtplaner.data.api.UserManager;
 import mosbach.dhbw.de.schichtplaner.util.DatabaseConnection;
 
 import java.sql.*;
@@ -14,11 +13,31 @@ import java.util.logging.Logger;
 public class UserManagerImpl implements UserManager {
 
     private static final Logger logger = Logger.getLogger(UserManagerImpl.class.getName());
+
+    // SQL Queries
     private static final String GET_ALL_USERS_QUERY = "SELECT * FROM group19users";
     private static final String GET_USER_BY_ID_QUERY = "SELECT * FROM group19users WHERE id = ?";
     private static final String CREATE_USER_QUERY = "INSERT INTO group19users (name, password_hash, role) VALUES (?, ?, ?)";
     private static final String UPDATE_USER_QUERY = "UPDATE group19users SET name = ?, password_hash = ?, role = ? WHERE id = ?";
     private static final String DELETE_USER_QUERY = "DELETE FROM group19users WHERE id = ?";
+
+    // Singleton instance
+    private static UserManagerImpl instance;
+
+    // Private constructor to prevent instantiation
+    private UserManagerImpl() {}
+
+    // Public method to provide access to the singleton instance
+    public static UserManagerImpl getInstance() {
+        if (instance == null) {
+            synchronized (UserManagerImpl.class) {
+                if (instance == null) {
+                    instance = new UserManagerImpl();
+                }
+            }
+        }
+        return instance;
+    }
 
     @Override
     public void createUser(User user) {
