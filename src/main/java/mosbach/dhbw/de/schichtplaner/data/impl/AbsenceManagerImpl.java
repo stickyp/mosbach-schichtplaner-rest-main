@@ -31,6 +31,22 @@ public class AbsenceManagerImpl implements AbsenceManager {
     }
 
     @Override
+    public int generateID() {
+        int highestID = 0;
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS max_id FROM group19absences")) {
+
+            if (rs.next()) {
+                highestID = rs.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Math.max(100, highestID + 1); // Ensure the ID is at least 100
+    }
+
+    @Override
     public List<Absence> getAllAbsences() {
         List<Absence> absences = new ArrayList<>();
         final Logger logger = Logger.getLogger("ReadAbsenceLogger");

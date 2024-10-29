@@ -31,6 +31,23 @@ public class EventManagerImpl implements EventManager {
     }
 
     @Override
+    public int generateID() {
+        int highestID = 0;
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS max_id FROM group19events")) {
+
+            if (rs.next()) {
+                highestID = rs.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Ensure the new ID is a three-digit number
+        return Math.max(100, highestID + 1);
+    }
+
+    @Override
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
         final Logger logger = Logger.getLogger("ReadEventLogger");

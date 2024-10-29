@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
-        "user",
+        "userId",
         "startTime",
         "endTime",
         "reason"
@@ -28,10 +28,10 @@ public class Absence {
     @NotNull
     private Integer id;
 
-    @JsonProperty("user")
-    @Valid
+    @JsonProperty("userId")
+    @JsonPropertyDescription("The unique identifier of the user associated with the absence")
     @NotNull
-    private User user;
+    private Integer userId;
 
     @JsonProperty("startTime")
     @JsonPropertyDescription("The start time of the absence")
@@ -54,9 +54,9 @@ public class Absence {
     public Absence() {
     }
 
-    public Absence(Integer id, User user, Date startTime, Date endTime, String reason) {
+    public Absence(Integer id, Integer userId, Date startTime, Date endTime, String reason) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.reason = reason;
@@ -72,14 +72,14 @@ public class Absence {
         this.id = id;
     }
 
-    @JsonProperty("user")
-    public User getUser() {
-        return user;
+    @JsonProperty("userId")
+    public Integer getUserId() {
+        return userId;
     }
 
-    @JsonProperty("user")
-    public void setUser(User user) {
-        this.user = user;
+    @JsonProperty("userId")
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @JsonProperty("startTime")

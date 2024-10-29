@@ -6,6 +6,7 @@ import mosbach.dhbw.de.schichtplaner.data.impl.UserImpl;
 import mosbach.dhbw.de.schichtplaner.data.impl.UserManagerImpl;
 import mosbach.dhbw.de.schichtplaner.model.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +17,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/", allowedHeaders = "*")
 public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class.getName());
     private final UserManager userManager = UserManagerImpl.getInstance();
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest request) {
         logger.log(Level.INFO, "Creating a new user: " + request.getName());
 
         // Assuming an ID generator logic in your manager or user implementation
-        int generatedId = UserManagerImpl.generateID();
+        int generatedId = UserManagerImpl.getInstance().generateID();
         User user = new UserImpl(generatedId, request.getName(), request.getPassword(), request.getRole(), null);
         userManager.createUser(user);
 
@@ -35,7 +36,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UpdateUserResponse> updateUser(@PathVariable int id, @RequestBody UpdateUserRequest request) {
         logger.log(Level.INFO, "Updating user with ID: " + id);
 

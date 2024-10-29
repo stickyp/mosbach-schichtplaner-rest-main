@@ -34,24 +34,22 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public int createID() {
-        int newID = 100; // Start with the smallest 3-digit number
-
+    public int generateID() {
+        int highestID = 0;
         try (Connection connection = DatabaseConnection.getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(GET_HIGHEST_ID_QUERY)) {
+             ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS max_id FROM group19users")) {
+
             if (rs.next()) {
-                int highestID = rs.getInt("max_id");
-                if (highestID >= 100) {
-                    newID = highestID + 1;
-                }
+                highestID = rs.getInt("max_id");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error fetching highest user ID", e);
+            e.printStackTrace();
         }
-
-        return newID;
+        // Ensure the new ID is a three-digit number
+        return Math.max(100, highestID + 1);
     }
+
 
     @Override
     public void createUser(User user) {

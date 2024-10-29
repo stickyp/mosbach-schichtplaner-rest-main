@@ -9,6 +9,7 @@ import mosbach.dhbw.de.schichtplaner.model.CreateAbsenceResponse;
 import mosbach.dhbw.de.schichtplaner.model.UpdateAbsenceRequest;
 import mosbach.dhbw.de.schichtplaner.model.UpdateAbsenceResponse;
 import mosbach.dhbw.de.schichtplaner.model.DeleteAbsenceResponse;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+@CrossOrigin(origins = "https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/absences")
 public class AbsenceController {
@@ -28,7 +31,7 @@ public class AbsenceController {
         logger.log(Level.INFO, "Creating new absence for user ID: " + request.getUserId());
 
         Absence newAbsence = new AbsenceImpl(
-                AbsenceManagerImpl.createID(),
+                AbsenceManagerImpl.getInstance().generateID(),
                 request.getUserId(),
                 request.getStartDateTime(),
                 request.getEndDateTime(),
@@ -41,7 +44,7 @@ public class AbsenceController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path ="/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UpdateAbsenceResponse> updateAbsence(@PathVariable int id, @RequestBody UpdateAbsenceRequest request) {
         logger.log(Level.INFO, "Updating absence ID: " + id);
 

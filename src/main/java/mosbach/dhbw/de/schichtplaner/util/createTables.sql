@@ -3,7 +3,7 @@ CREATE TABLE group19users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL CHECK (role IN ('ADMIN', 'USER')),
+    role VARCHAR(50) NOT NULL CHECK (role IN ('Admin', 'Benutzer')),
     jwt_token VARCHAR(500)
 );
 
@@ -15,13 +15,13 @@ CREATE TABLE group19events (
     end_time TIMESTAMP NOT NULL,
     location VARCHAR(255),
     description TEXT,
-    assigned_user_id INT REFERENCES users(id) ON DELETE SET NULL
+    assigned_user_id INT REFERENCES group19users(id) ON DELETE SET NULL
 );
 
 -- Create table for Absences
 CREATE TABLE group19absences (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES group19users(id) ON DELETE CASCADE,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     reason VARCHAR(255) NOT NULL
@@ -36,3 +36,6 @@ CREATE TABLE group19weather_forecasts (
     precipitation DECIMAL(5, 2),
     wind_speed DECIMAL(5, 2)
 );
+
+INSERT INTO group19users (id, name, password_hash, role)
+VALUES (100, 'TestAdmin', 'TestAdmin', 'Admin');

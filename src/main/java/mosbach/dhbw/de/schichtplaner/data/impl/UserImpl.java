@@ -19,13 +19,6 @@ public class UserImpl implements User {
         this.jwtToken = jwtToken;
     }
 
-    // Constructor for creating a user without ID, useful for requests
-    public UserImpl(String name, String passwordHash, String role, String jwtToken) {
-        this.name = name;
-        this.passwordHash = passwordHash;
-        this.role = role;
-        this.jwtToken = jwtToken;
-    }
 
     @Override
     public int getId() {

@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
         "title",
         "startDateTime",
         "endDateTime",
-        "user",
+        "userId",
         "location",
         "description"
 })
@@ -45,15 +45,15 @@ public class Event {
     @NotNull
     private Date endDateTime;
 
-    @JsonProperty("user")
-    @Valid
+    @JsonProperty("userId")
+    @JsonPropertyDescription("The unique identifier of the user associated with the event")
     @NotNull
-    private User user;
+    private Integer userId;
 
     @JsonProperty("location")
     @Valid
     @NotNull
-    private Location location;
+    private GetAllEventResponse.Location location;
 
     @JsonProperty("description")
     @JsonPropertyDescription("The description of the event")
@@ -66,12 +66,12 @@ public class Event {
     public Event() {
     }
 
-    public Event(Integer id, String title, Date startDateTime, Date endDateTime, User user, Location location, String description) {
+    public Event(Integer id, String title, Date startDateTime, Date endDateTime, Integer userId, GetAllEventResponse.Location location, String description) {
         this.id = id;
         this.title = title;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.user = user;
+        this.userId = userId;
         this.location = location;
         this.description = description;
     }
@@ -116,23 +116,23 @@ public class Event {
         this.endDateTime = endDateTime;
     }
 
-    @JsonProperty("user")
-    public User getUser() {
-        return user;
+    @JsonProperty("userId")
+    public Integer getUserId() {
+        return userId;
     }
 
-    @JsonProperty("user")
-    public void setUser(User user) {
-        this.user = user;
+    @JsonProperty("userId")
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @JsonProperty("location")
-    public Location getLocation() {
+    public GetAllEventResponse.Location getLocation() {
         return location;
     }
 
     @JsonProperty("location")
-    public void setLocation(Location location) {
+    public void setLocation(GetAllEventResponse.Location location) {
         this.location = location;
     }
 

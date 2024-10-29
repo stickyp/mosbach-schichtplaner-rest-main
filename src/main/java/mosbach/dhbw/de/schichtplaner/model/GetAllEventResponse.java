@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
         "title",
         "startDateTime",
         "endDateTime",
-        "user",
+        "userId",
         "location",
         "description"
 })
@@ -45,10 +45,10 @@ public class GetAllEventResponse {
     @NotNull
     private Date endDateTime;
 
-    @JsonProperty("user")
-    @Valid
+    @JsonProperty("userId")
+    @JsonPropertyDescription("The unique identifier of the user associated with the event")
     @NotNull
-    private User user;
+    private Integer userId;
 
     @JsonProperty("location")
     @Valid
@@ -67,13 +67,12 @@ public class GetAllEventResponse {
     public GetAllEventResponse() {
     }
 
-    public GetAllEventResponse(Integer id, String title, Date startDateTime, Date endDateTime, User user, Location location, String description) {
-        super();
+    public GetAllEventResponse(Integer id, String title, Date startDateTime, Date endDateTime, Integer userId, Location location, String description) {
         this.id = id;
         this.title = title;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.user = user;
+        this.userId = userId;
         this.location = location;
         this.description = description;
     }
@@ -118,14 +117,14 @@ public class GetAllEventResponse {
         this.endDateTime = endDateTime;
     }
 
-    @JsonProperty("user")
-    public User getUser() {
-        return user;
+    @JsonProperty("userId")
+    public Integer getUserId() {
+        return userId;
     }
 
-    @JsonProperty("user")
-    public void setUser(User user) {
-        this.user = user;
+    @JsonProperty("userId")
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @JsonProperty("location")
@@ -150,7 +149,7 @@ public class GetAllEventResponse {
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+        return additionalProperties;
     }
 
     @JsonAnySetter
@@ -158,60 +157,30 @@ public class GetAllEventResponse {
         this.additionalProperties.put(name, value);
     }
 
-    // Inner class for AssignedUser
-    public static class AssignedUser extends User {
-
-        @JsonProperty("id")
-        @JsonPropertyDescription("The unique identifier of the assigned user")
-        private Integer id;
-
-        @JsonProperty("name")
-        @JsonPropertyDescription("The name of the assigned user")
-        private String name;
-
-        public AssignedUser() {
-        }
-
-        public AssignedUser(Integer id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @JsonProperty("id")
-        public Integer getId() {
-            return id;
-        }
-
-        @JsonProperty("id")
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        @JsonProperty("name")
-        public String getName() {
-            return name;
-        }
-
-        @JsonProperty("name")
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    // Inner class for Location
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonPropertyOrder({
+            "address",
+            "latitude",
+            "longitude"
+    })
     public static class Location {
 
         @JsonProperty("address")
-        @JsonPropertyDescription("The address of the event location")
+        @JsonPropertyDescription("The address of the location")
+        @NotNull
         private String address;
 
         @JsonProperty("latitude")
-        @JsonPropertyDescription("The latitude of the event location")
+        @JsonPropertyDescription("The latitude of the location")
         private Double latitude;
 
         @JsonProperty("longitude")
-        @JsonPropertyDescription("The longitude of the event location")
+        @JsonPropertyDescription("The longitude of the location")
         private Double longitude;
+
+        @JsonIgnore
+        @Valid
+        private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
         public Location() {
         }
@@ -250,6 +219,16 @@ public class GetAllEventResponse {
         @JsonProperty("longitude")
         public void setLongitude(Double longitude) {
             this.longitude = longitude;
+        }
+
+        @JsonAnyGetter
+        public Map<String, Object> getAdditionalProperties() {
+            return additionalProperties;
+        }
+
+        @JsonAnySetter
+        public void setAdditionalProperty(String name, Object value) {
+            this.additionalProperties.put(name, value);
         }
     }
 }

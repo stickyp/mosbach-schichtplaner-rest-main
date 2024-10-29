@@ -5,10 +5,10 @@ import java.util.List;
 public interface UserManager {
 
     /**
-     * Creates a unique ID for a new user.
+     * Generates a unique ID for a new user.
      * @return int - a unique user ID.
      */
-    int createID();
+    int generateID(); // Changed from createID()
 
     /**
      * Creates a new user.
