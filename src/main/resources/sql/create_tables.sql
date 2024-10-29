@@ -36,6 +36,3 @@ CREATE TABLE group19weather_forecasts (
     precipitation DECIMAL(5, 2),
     wind_speed DECIMAL(5, 2)
 );
-
-INSERT INTO group19users (id, name, password_hash, role)
-VALUES (100, 'TestAdmin', 'TestAdmin', 'Admin');

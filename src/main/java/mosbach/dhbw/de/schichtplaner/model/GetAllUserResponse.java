@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import mosbach.dhbw.de.schichtplaner.data.api.Absence;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -49,7 +50,6 @@ public class GetAllUserResponse {
     }
 
     public GetAllUserResponse(Integer id, String name, Date lastLogin, List<Absence> absence) {
-        super();
         this.id = id;
         this.name = name;
         this.lastLogin = lastLogin;

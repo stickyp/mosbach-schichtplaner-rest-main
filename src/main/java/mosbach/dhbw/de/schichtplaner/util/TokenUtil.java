@@ -1,5 +1,7 @@
 package mosbach.dhbw.de.schichtplaner.util;
 
+import mosbach.dhbw.de.schichtplaner.data.impl.UserManagerImpl;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,7 @@ public class TokenUtil {
 
     public String generateToken(String username) {
         // Generate a simple token by combining username and current timestamp
-        String token = username + "_" + System.currentTimeMillis();
+        String token = username + "_" + System.currentTimeMillis() + "_" + UserManagerImpl.getInstance().getUserByName(username);
         tokenStore.put(token, username);
         return token;
     }
