@@ -120,4 +120,9 @@ public class EventController {
 
         return ResponseEntity.ok(response);
     }
+
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions() {
+        return ResponseEntity.ok().build();
+    }
 }

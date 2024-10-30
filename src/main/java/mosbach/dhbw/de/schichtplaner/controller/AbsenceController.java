@@ -78,4 +78,9 @@ public class AbsenceController {
         List<Absence> absences = absenceManager.getAbsencesByUserId(userId);
         return ResponseEntity.ok(absences);
     }
+
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions() {
+        return ResponseEntity.ok().build();
+    }
 }
