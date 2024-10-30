@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/absences")
 public class AbsenceController {
@@ -25,7 +25,10 @@ public class AbsenceController {
     private final AbsenceManager absenceManager = AbsenceManagerImpl.getInstance();
     private static final Logger logger = Logger.getLogger(AbsenceController.class.getName());
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<CreateAbsenceResponse> createAbsence(@RequestBody CreateAbsenceRequest request) {
         logger.log(Level.INFO, "Creating new absence for user ID: " + request.getUserId());
 
@@ -43,7 +46,11 @@ public class AbsenceController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(
+            path = "/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<UpdateAbsenceResponse> updateAbsence(@PathVariable int id, @RequestBody UpdateAbsenceRequest request) {
         logger.log(Level.INFO, "Updating absence ID: " + id);
 
@@ -61,7 +68,10 @@ public class AbsenceController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(
+            path = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<DeleteAbsenceResponse> deleteAbsence(@PathVariable int id) {
         logger.log(Level.INFO, "Deleting absence ID: " + id);
 
@@ -71,7 +81,10 @@ public class AbsenceController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping(
+            path = "/user/{userId}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<List<Absence>> getAbsencesByUserId(@PathVariable int userId) {
         logger.log(Level.INFO, "Fetching absences for user ID: " + userId);
 

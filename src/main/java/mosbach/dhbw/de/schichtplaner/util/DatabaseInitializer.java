@@ -60,7 +60,7 @@ public class DatabaseInitializer {
 
             // Create the dummy user without hashing the password
             userManager.updateUser(new mosbach.dhbw.de.schichtplaner.data.impl.UserImpl(
-                    100,
+                    userManager.generateID(),
                     "TestAdmin",
                     plainPassword,
                     "Admin",

@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -30,7 +30,10 @@ public class EventController {
     private final UserManager userManager = UserManagerImpl.getInstance();
     private static final Logger logger = Logger.getLogger(EventController.class.getName());
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<CreateEventResponse> createEvent(@RequestBody CreateEventRequest request) {
         logger.log(Level.INFO, "Creating new event: " + request.getTitle());
 
@@ -50,7 +53,11 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(
+            path = "/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<UpdateEventResponse> updateEvent(@PathVariable int id, @RequestBody UpdateEventRequest request) {
         logger.log(Level.INFO, "Updating event ID: " + id);
 
@@ -70,7 +77,10 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(
+            path = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<DeleteEventResponse> deleteEvent(@PathVariable int id) {
         logger.log(Level.INFO, "Deleting event ID: " + id);
 
@@ -80,7 +90,7 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<GetAllEventResponse>> getAllEvents() {
         logger.log(Level.INFO, "Fetching all events");
 
@@ -99,7 +109,10 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(
+            path = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<GetAllEventResponse> getEventById(@PathVariable int id) {
         logger.log(Level.INFO, "Fetching event with ID: " + id);
 

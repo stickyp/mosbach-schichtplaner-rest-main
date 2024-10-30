@@ -1,4 +1,3 @@
-/*
 package mosbach.dhbw.de.schichtplaner.config;
 
 import org.springframework.context.annotation.Bean;
@@ -26,15 +25,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (adjust based on your needs)
-                .cors(withDefaults()) // Enable CORS configuration
+                .csrf(csrf -> csrf.disable())
+                .cors(withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/**").permitAll() // Allow access to authentication endpoints
-                        .anyRequest().authenticated() // All other requests require authentication
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()) // Enable Basic Authentication
-                 // Disable form-based login since we are using API-based login
-                .logout(logout -> logout.permitAll()); // Permit all to access logout endpoint
+                .httpBasic(withDefaults())
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }
@@ -43,13 +41,13 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("*"); // Allow all origins - adjust based on your needs
+        config.addAllowedOrigin("https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/");
+        config.addAllowedOrigin("http://SchichtplanerBackend-delightful-hartebeest-ka.apps.01.cf.eu01.stackit.cloud/");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.setAllowCredentials(true); // Allow credentials such as cookies or authorization headers
+        config.setAllowCredentials(true);
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }
-*/

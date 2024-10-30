@@ -10,6 +10,7 @@ import mosbach.dhbw.de.schichtplaner.util.TokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Level;
@@ -17,12 +18,37 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "https://eventcalender-sleepy-wallaby-ri.apps.01.cf.eu01.stackit.cloud/", allowedHeaders = "*")
 public class AuthController {
 
     private static final Logger logger = Logger.getLogger(AuthController.class.getName());
     private final UserManager userManager = UserManagerImpl.getInstance();
     private final TokenUtil tokenUtil = new TokenUtil();
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostMapping(
+            path = "/login",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        logger.log(Level.INFO, "User attempting to log in: " + request.getName());
+
+        mosbach.dhbw.de.schichtplaner.data.api.User user = userManager.getUserByName(request.getName());
+        if (user != null && passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            String token = tokenUtil.generateToken(user.getName());
+
+            mosbach.dhbw.de.schichtplaner.model.User userModel = new mosbach.dhbw.de.schichtplaner.model.User(user.getId(), user.getName(), user.getRole());
+            LoginResponse response = new LoginResponse(token, (int) tokenUtil.getExpiryTime(), userModel);
+            return ResponseEntity.ok(response);
+        } else {
+            return new ResponseEntity<>(new MessageAnswer("Wrong credentials or user not found"), HttpStatus.UNAUTHORIZED);
+        }
+    }
 
     @GetMapping
     public String getAuth() {
@@ -31,7 +57,8 @@ public class AuthController {
 
     @PostMapping(
             path = "/seed-initial-user",
-            consumes = {MediaType.APPLICATION_JSON_VALUE}
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<String> seedInitialUser() {
         try {
@@ -45,7 +72,10 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/create-tables")
+    @GetMapping(
+            path = "/create-tables",
+            produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public ResponseEntity<String> createTablesAndDummyUser() {
         try {
             String sqlFilePath = "src/main/resources/sql/create_tables.sql"; // Update the path to your SQL file
@@ -64,26 +94,4 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(
-            path = "/login",
-            consumes = {MediaType.APPLICATION_JSON_VALUE}
-    )
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        logger.log(Level.INFO, "User attempting to log in: " + request.getName());
-
-        // Retrieve the user by name
-        mosbach.dhbw.de.schichtplaner.data.api.User user = userManager.getUserByName(request.getName());
-        if (user != null && request.getPassword().equals(user.getPasswordHash())) {
-            String token = tokenUtil.generateToken(user.getName());
-
-            // Convert the retrieved User from data.api to model.User
-            mosbach.dhbw.de.schichtplaner.model.User userModel = new mosbach.dhbw.de.schichtplaner.model.User(user.getId(), user.getName(), user.getRole());
-
-            // Send response with token and expiry time
-            LoginResponse response = new LoginResponse(token, (int) tokenUtil.getExpiryTime(), userModel);
-            return ResponseEntity.ok(response);
-        } else {
-            return new ResponseEntity<>(new MessageAnswer("Wrong credentials or user not found"), HttpStatus.UNAUTHORIZED);
-        }
-    }
 }
